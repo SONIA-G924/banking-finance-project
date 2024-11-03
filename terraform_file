@@ -1,1 +1,47 @@
+provider "aws" {
+  region     = "ap-south-1"
+  access_key = "AsadfXWYAKI"
+  secret_key = "LasdfaasdfTDT3xQdXIXrQQk8A0P"
+}
 
+# Create AWS Instance
+
+resource "aws_instance" "banking_master" {
+  
+  ami           = "ami-0dee22c13ea7a9a67"
+  instance_type = "t2.medium"
+  key_name      = "ansible_key"
+
+  tags = {
+    Name = "banking_master"
+  }
+}
+# Create AWS Instance for Production Server
+
+resource "aws_instance" "banking_prod" {
+  
+  ami           = "ami-0dee22c13ea7a9a67"
+  instance_type = "t2.micro"
+  key_name      = "ansible_key"
+
+  tags = {
+    Name = "banking_prod"
+  }
+}
+
+# Create AWS Instance for Monitoring Server
+
+resource "aws_instance" "banking_monitoring" {
+  
+  ami           = "ami-0dee22c13ea7a9a67"
+  instance_type = "t2.micro"
+  key_name      = "ansible_key"
+
+  tags = {
+    Name = "banking_montoring"
+  }
+}
+
+#To run 
+terraform init
+terraform apply
