@@ -1,0 +1,39 @@
+---
+- name: Install Required Software on Master Server
+  hosts: master
+  become: yes
+  tasks:
+    - name: Update APT package index
+      apt:
+        update_cache: yes
+
+    - name: Install OpenJDK, Maven, Git, Docker, Ansible
+      apt:
+        name:
+          - openjdk-17-jdk
+          - maven
+          - git
+          - docker.io
+          - ansible
+        state: present
+
+    - name: Add Jenkins key
+      apt_key:
+        url: 'https://pkg.jenkins.io/debian/jenkins.io.key'
+        state: present
+
+    - name: Add Jenkins repository
+      apt_repository:
+        repo: 'deb http://pkg.jenkins.io/debian-stable binary/'
+        state: present
+
+    - name: Install Jenkins
+      apt:
+        name: jenkins
+        state: present
+
+    - name: Start and enable Jenkins service
+      systemd:
+        name: jenkins
+        state: started
+        enabled:yes
